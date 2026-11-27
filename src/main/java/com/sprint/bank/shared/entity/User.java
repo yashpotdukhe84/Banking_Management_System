@@ -32,4 +32,10 @@ public class User {
               orphanRemoval = true)
               
     private CustomerProfile customerProfile;
+
+    public User(String email, String password, Role role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 }

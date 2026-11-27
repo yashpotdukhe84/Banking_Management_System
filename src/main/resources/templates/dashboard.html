@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Banking Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px 16px;
+        }
+        .card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 6px;
+            padding: 24px;
+        }
+        h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: #222222;
+        }
+        .info-row {
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #333333;
+        }
+        .info-label {
+            font-weight: bold;
+        }
+        button {
+            margin-top: 18px;
+            width: 100%;
+            padding: 10px;
+            background-color: #dc3545;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #bb2d3b;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>Welcome, <span th:text="${fullName}">User</span>!</h2>
+
+    <div class="info-row">
+        <span class="info-label">Email:</span>
+        <span th:text="${email}">user@example.com</span>
+    </div>
+
+    <div class="info-row">
+        <span class="info-label">Role:</span>
+        <span th:text="${role}">CUSTOMER</span>
+    </div>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+
+<th:block th:replace="~{toast :: toast}"></th:block>
+</body>
+</html>
