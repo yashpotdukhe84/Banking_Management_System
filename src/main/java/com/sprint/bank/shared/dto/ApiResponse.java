@@ -1,9 +1,7 @@
 package com.sprint.bank.shared.dto;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,22 +14,25 @@ public class ApiResponse<T> {
     private String message;
     private T data;
 
-    public ApiResponse(LocalDateTime timestamp,
-                      int status,
-                      String message) {
+    public ApiResponse(LocalDateTime timestamp, int status, String message) {
         this.timestamp = timestamp;
         this.status = status;
         this.message = message;
         this.data = null;
     }
 
-    public ApiResponse(LocalDateTime timestamp,
-                      int status,
-                      String message,
-                      T data) {
+    public ApiResponse(LocalDateTime timestamp,int status,String message,T data) {
         this.timestamp = timestamp;
         this.status = status;
         this.message = message;
         this.data = data;
+    }
+
+    public static <T> ApiResponse<T> of(int status, String message, T data) {
+        return new ApiResponse<>(LocalDateTime.now(), status, message, data);
+    }
+
+    public static ApiResponse<Void> error(int status, String message) {
+        return new ApiResponse<>(LocalDateTime.now(), status, message, null);
     }
 }

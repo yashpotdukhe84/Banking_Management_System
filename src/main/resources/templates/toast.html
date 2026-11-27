@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="toast">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- Fallback notification box if offline (Toastify CDN unavailable) -->
+    <div id="fallback-toast"
+         style="display:none; position:fixed; top:20px; right:20px; padding:12px 20px; border-radius:6px; color:#fff; font-size:14px; font-family:Arial,sans-serif; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:9999;"></div>
+
+    <script th:inline="javascript">
+        function showToast(message, isError) {
+            if (!message) {
+                return;
+            }
+            const bgColor = isError ? "#dc3545" : "#198754";
+
+            if (typeof Toastify === "function") {
+                Toastify({
+                    text: message,
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    style: { background: bgColor }
+                }).showToast();
+            } else {
+                const box = document.getElementById("fallback-toast");
+                box.textContent = message;
+                box.style.backgroundColor = bgColor;
+                box.style.display = "block";
+                setTimeout(function () {
+                    box.style.display = "none";
+                }, 3000);
+            }
+        }
+
+        const isLogout = /*[[${param.logout != null}]]*/ false;
+        const isLogin = /*[[${param.login != null}]]*/ false;
+        const isRegistered = /*[[${param.registered != null}]]*/ false;
+        const errorMessage = /*[[${errorMessage}]]*/ null;
+
+        if (isLogout) {
+            showToast("Logged out successfully!", false);
+        } else if (isLogin) {
+            showToast("Login successful!", false);
+        } else if (isRegistered) {
+            showToast("Registration successful!", false);
+        }
+
+        if (errorMessage) {
+            showToast(errorMessage, true);
+        }
+
+        if (window.location.search) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
+</th:block>
+</body>
+</html>
